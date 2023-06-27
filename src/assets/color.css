@@ -1,0 +1,17 @@
+:root {
+  /* basics colors */
+  --black: #1E1E1E;
+  --dark-grey: #3F3F3F;
+  --grey: #DCDCDC;
+  --white: #FFFFFF; /* or you can specify white */
+
+  /* men colors */
+  --men-dark: #002772;
+  --men-light: #D6E6FF;
+
+  /* women colors */
+  --women-dark: #720060;
+  --women-light: #FDE2FF;
+
+  /* divider colors */
+}

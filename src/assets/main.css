@@ -1,0 +1,12 @@
+@import "./color.css";
+
+* {
+  /* specify font family */
+  font-family: 'Inter', sans-serif;
+
+  /*resetting margin */
+  margin: 0;
+  padding: 0;
+}
+
+
