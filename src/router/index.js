@@ -10,17 +10,7 @@ const router = new VueRouter({
     {
       path: "/",
       name: "home",
-      component: () => import("../pages/Menu.vue"),
-    },
-    {
-      path: "/man",
-      name: "men",
-      component: () => import("../pages/Mens.vue"),
-    },
-    {
-      path: "/woman",
-      name: "women",
-      component: () => import("../pages/Womens.vue"),
+      component: () => import("../pages/Store.vue"),
     },
     {
       path: "*",

@@ -9,4 +9,20 @@
   padding: 0;
 }
 
+/* color and backgound css utility */
 
+.bg-men {
+  background-color: var(--men-dark);
+}
+
+.color-men {
+  color: var(--men-dark);
+}
+
+.bg-women {
+  background-color: var(--women-dark);
+}
+
+.color-women {
+  color: var(--women-dark);
+}

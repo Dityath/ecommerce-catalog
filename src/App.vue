@@ -1,20 +1,55 @@
 <script>
+import Store from "./components/Store.vue"
+
 export default {
+  components: {
+    Store
+  },
   data() {
     return {
-      backgroundClass: 'main-others-background-color'
+      dataId: 1,
+      responseData: {},
+      isLoading: true
     }
   },
   methods: {
-    getBackground() {
-      const routeName = this.$route.name
-        if (routeName === 'men') {
-          return 'main-mens-background-color'
-        } else if (routeName === 'women') {
-          return 'main-womens-background-color'
+    async fetchData() {
+      try {
+        const res = await fetch(`https://fakestoreapi.com/products/${this.dataId}`)
+        if (res.ok) {
+          const data = await res.json()
+          console.log(data)
+          this.responseData = data
         } else {
-          return 'main-others-background-color'
-        } 
+          throw new Error('Error')
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    addDataId() {
+      this.dataId++
+    }
+  },
+  mounted() {
+    this.fetchData()
+  },
+  computed: {
+    getBackground() {
+      if (this.responseData.category === "men's clothing") {
+        return 'main-mens-background-color'
+      } else if (this.responseData.category === "women's clothing") {
+        return 'main-womens-background-color'
+      } else {
+        return 'main-others-background-color'
+      } 
+    },
+    getColors() {
+      if (this.responseData.category === "men's clothing") {
+        return 'men'
+      } else if (this.responseData.category === "women's clothing") {
+        return 'women'
+      }
     }
   },
 }
@@ -23,11 +58,20 @@ export default {
 <template>
   <div id="app" class="main-app">
     <div class="main-view">
-      <router-view />
+      <Store
+        :title="responseData.title"
+        :colors="getColors"
+        :category="responseData.category"
+        :rating="responseData.rating ? responseData.rating.rate : null"
+        :desc="responseData.description"
+        :price="responseData.price"
+        :img="responseData.image"
+        :handleNext="dataId++"
+      />
     </div>
     <div 
       class="main-background"
-      :class="getBackground()"
+      :class="getBackground"
     />
   </div>
 </template>

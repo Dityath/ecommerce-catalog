@@ -1,3 +1,24 @@
+<script>
+import router from '../router'
+
+export default {
+  data() {
+    return {
+      responseData: null,
+      currentId: 2
+    }
+  },
+  mounted() {
+    // this.fetchData()
+  },
+  methods: {
+    navigateNextProduct(nextId) {
+      router.push({ name: 'men', query: { id: nextId }})
+    }
+  }
+}
+</script>
+
 <template>
   <div class="mens-main-div">
     <section class="mens-left-img">
@@ -29,7 +50,12 @@
         <p>$29.95</p>
         <div class="mens-right-bottom-button">
           <button class="mens-right-bottom-button-first">Buy now</button>
-          <button class="mens-right-bottom-button-second">Next product</button>
+          <button 
+            @click="navigateNextProduct(14)"
+            class="mens-right-bottom-button-second"
+          >
+            Next product
+          </button>
         </div>
       </div> 
     </section>
