@@ -1,34 +1,45 @@
 <script>
 import Store from "./components/Store.vue"
+import Custom404 from "./components/Custom404.vue"
 
 export default {
   components: {
-    Store
+    Store,
+    Custom404
   },
   data() {
     return {
       dataId: 1,
       responseData: {},
-      isLoading: true
+      isLoading: true,
+      isValid: true
     }
   },
   methods: {
     async fetchData() {
+      this.isLoading = true
+
       try {
         const res = await fetch(`https://fakestoreapi.com/products/${this.dataId}`)
         if (res.ok) {
           const data = await res.json()
-          console.log(data)
           this.responseData = data
+          this.isLoading = false
+          this.isValid = data.category === "women's clothing" || data.category === "men's clothing"
         } else {
           throw new Error('Error')
         }
       } catch (error) {
         console.error(error)
+        this.isValid = false
+        this.isLoading = false
+        this.dataId = 0 
       }
     },
     addDataId() {
       this.dataId++
+      this.responseData = {}
+      this.fetchData();
     }
   },
   mounted() {
@@ -36,9 +47,9 @@ export default {
   },
   computed: {
     getBackground() {
-      if (this.responseData.category === "men's clothing") {
+      if (this.responseData.category === "men's clothing" && !this.isLoading) {
         return 'main-mens-background-color'
-      } else if (this.responseData.category === "women's clothing") {
+      } else if (this.responseData.category === "women's clothing" && !this.isLoading) {
         return 'main-womens-background-color'
       } else {
         return 'main-others-background-color'
@@ -57,7 +68,12 @@ export default {
 
 <template>
   <div id="app" class="main-app">
-    <div class="main-view">
+    <div v-if="isLoading" class="main-view">
+      <div class="main-center-spinner">
+        <div class="main-spinner" />
+      </div>
+    </div>
+    <div v-else-if="!isLoading && isValid" class="main-view">
       <Store
         :title="responseData.title"
         :colors="getColors"
@@ -66,8 +82,11 @@ export default {
         :desc="responseData.description"
         :price="responseData.price"
         :img="responseData.image"
-        :handleNext="dataId++"
+        :handleNext="addDataId"
       />
+    </div>
+    <div v-else class="main-view">
+      <Custom404 :handleNext="addDataId" />
     </div>
     <div 
       class="main-background"
@@ -95,6 +114,28 @@ export default {
   background-color: white;
   border-radius: 10px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.main-center-spinner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-spinner {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid var(--black);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .main-background {

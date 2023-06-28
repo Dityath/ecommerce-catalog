@@ -10,10 +10,53 @@ export default {
     img: String,
     handleNext: Function,
   },
-  data() {
-    return {
+  computed: {
+    showRating1() {
+      if (this.rating >= 1 && this.colors === 'women') {
+        return 'bg-women'
+      } else if (this.rating >= 1 && this.colors === 'men') {
+        return 'bg-men'
+      } else {
+        return ''
+      }
+    },
+    showRating2() {
+      if (this.rating >= 2 && this.colors === 'women') {
+        return 'bg-women'
+      } else if (this.rating >= 2 && this.colors === 'men') {
+        return 'bg-men'
+      } else {
+        return ''
+      }
+    },
+    showRating3() {
+      if (this.rating >= 3 && this.colors === 'women') {
+        return 'bg-women'
+      } else if (this.rating >= 3 && this.colors === 'men') {
+        return 'bg-men'
+      } else {
+        return ''
+      }
+    },
+    showRating4() {
+      if (this.rating >= 4 && this.colors === 'women') {
+        return 'bg-women'
+      } else if (this.rating >= 4 && this.colors === 'men') {
+        return 'bg-men'
+      } else {
+        return ''
+      }
+    },
+    showRating5() {
+      if (this.rating >= 5 && this.colors === 'women') {
+        return 'bg-women'
+      } else if (this.rating >= 5 && this.colors === 'men') {
+        return 'bg-men'
+      } else {
+        return ''
+      }
     }
-  },
+  }
 }
 </script>
 
@@ -37,11 +80,11 @@ export default {
               class="store-right-top-rating-right"
               :class="colors === 'men' ? 'rating-men' : 'rating-women'"
             >
-              <span :class="colors === 'men' ? 'bg-men' : 'bg-women'" />
-              <span />
-              <span />
-              <span />
-              <span />
+              <span :class="showRating1" />
+              <span :class="showRating2" />
+              <span :class="showRating3" />
+              <span :class="showRating4" />
+              <span :class="showRating5" />
             </div>
           </div>
         </div>
@@ -53,7 +96,7 @@ export default {
       <div class="store-right-bottom-div">
         <div class="store-divider-bottom" />
         <p :class="colors === 'men' ? 'color-men' : 'color-women'">
-          {{price}}
+          ${{price}}
         </p>
         <div 
           class="store-right-bottom-button"
@@ -66,7 +109,7 @@ export default {
             Buy now
           </button>
           <button 
-            @click="handleNext()"
+            @click="handleNext"
             :class="colors === 'men' ? 'store-right-bottom-button-second-men'
                     : 'store-right-bottom-button-second-women'"
           >
@@ -180,6 +223,12 @@ export default {
   padding: 0.25rem 0;
   font-weight: 600;
   font-size: 16px;
+  transition: 0.2s;
+}
+
+.store-right-bottom-button button:hover {
+  opacity: 0.7;
+  cursor: pointer;
 }
 
 .store-bottom-button-men button {
