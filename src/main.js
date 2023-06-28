@@ -1,11 +1,8 @@
 import Vue from "vue";
+import App from "./App.vue"; // Main app file
 
-import App from "./App.vue";
-import router from "./router";
-
-import "./assets/main.css";
+import "./assets/main.css"; // main CSS file
 
 new Vue({
-  router,
   render: (h) => h(App),
 }).$mount("#app");

@@ -4,8 +4,8 @@ import Custom404 from "./components/Custom404.vue"
 
 export default {
   components: {
-    Store,
-    Custom404
+    Store, //component for showing what inside the white box
+    Custom404, //component for showing not found from api
   },
   data() {
     return {
@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     async fetchData() {
-      this.isLoading = true
+      this.isLoading = true // loading parameter
 
       try {
         const res = await fetch(`https://fakestoreapi.com/products/${this.dataId}`)
@@ -25,15 +25,14 @@ export default {
           const data = await res.json()
           this.responseData = data
           this.isLoading = false
-          this.isValid = data.category === "women's clothing" || data.category === "men's clothing"
+          this.isValid = data.category === "women's clothing" || data.category === "men's clothing" // to prevent showing other things than clothes
         } else {
           throw new Error('Error')
         }
       } catch (error) {
-        console.error(error)
-        this.isValid = false
+        this.isValid = false // showing error page because there's an error
         this.isLoading = false
-        this.dataId = 0 
+        this.dataId = 0 // reset the product into 0 (0+1 later) 
       }
     },
     addDataId() {
@@ -46,6 +45,7 @@ export default {
     this.fetchData()
   },
   computed: {
+    // getting the background colors
     getBackground() {
       if (this.responseData.category === "men's clothing" && !this.isLoading) {
         return 'main-mens-background-color'
@@ -55,6 +55,7 @@ export default {
         return 'main-others-background-color'
       } 
     },
+    // getting component colors
     getColors() {
       if (this.responseData.category === "men's clothing") {
         return 'men'
